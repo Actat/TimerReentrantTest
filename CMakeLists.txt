@@ -21,14 +21,20 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
 add_executable(test_node src/test_node.cpp)
 target_include_directories(test_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(test_node rclcpp)
+add_executable(test_node2 src/test_node2.cpp)
+target_include_directories(test_node2 PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(test_node2 rclcpp std_msgs)
 
-install(TARGETS test_node
+install(TARGETS test_node test_node2
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
